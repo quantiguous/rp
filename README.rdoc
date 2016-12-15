@@ -5,14 +5,14 @@ Steps to create an engine :
         rails plugin new ENGINE_NAME --dummy-path=spec/dummy --skip-test-unit --mountable
   2. Edit gemspec to add the homepage and summary.
   3. Run bundle install.
-  4. If you are genetating the resources to be used by the engine through scaffold, do the following configuration in              lib/myengine/engine.rb :
+  4. If you are genetating the resources to be used by the engine through scaffold, do the following configuration in  lib/myengine/engine.rb :
         config.generators do |g|
           g.test_framework :rspec, :fixture => false
           g.fixture_replacement :factory_girl, :dir => 'spec/factories'
           g.template_engine :haml
         end
 
-  5. Add the following configuration in lib/myengine/engine.rb file to let all of your engine’s migrations automatically get        run in the wrapper Rails app :
+  5. Add the following configuration in lib/myengine/engine.rb file to let all of your engine’s migrations automatically get  run in the wrapper Rails app :
         initializer :append_migrations do |app|
           unless app.root.to_s.match "#{root}/"
             config.paths['db/migrate'].expanded.each do |expanded_path|
