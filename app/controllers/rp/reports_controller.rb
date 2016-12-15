@@ -2,16 +2,12 @@ require_dependency "rp/application_controller"
 
 module Rp
   class ReportsController < ApplicationController
-    before_action :set_report, only: [:show, :edit, :update, :destroy]
+    before_action :set_report, only: [:destroy]
 
     # GET /reports
     def index
-      @available_reports = AvailableReport.all
-    end
-
-    # GET /reports/1
-    def show
-      @reports = Report.all
+      reports = Report.order('id desc')
+      @reports = reports.paginate(per_page: 30, page: params[:page])
     end
 
     # GET /reports/new
@@ -19,34 +15,24 @@ module Rp
       @report = Report.new
     end
 
-    # GET /reports/1/edit
-    def edit
-    end
-
     # POST /reports
     def create
       @report = Report.new(report_params)
 
       if @report.save
-        redirect_to @report, notice: 'Report was successfully created.'
+        redirect_to reports_path, notice: 'Report was successfully created.'
       else
         render :new
       end
     end
 
-    # PATCH/PUT /reports/1
-    def update
-      if @report.update(report_params)
-        redirect_to @report, notice: 'Report was successfully updated.'
-      else
-        render :edit
-      end
-    end
-
-    # DELETE /reports/1
-    def destroy
-      @report.destroy
-      redirect_to reports_url, notice: 'Report was successfully destroyed.'
+    def download
+      require 'uri/open-scp'
+      report = Report.find(params[:id])
+      
+      # cmd = "scp://iibadm@#{Rp.host}"
+      data = open("#{report.file_path}/#{report.file_name}").read rescue ""
+      send_data data, filename: report.file_name, type: report.mime_type
     end
 
     private
@@ -57,7 +43,10 @@ module Rp
 
       # Only allow a trusted parameter "white list" through.
       def report_params
-        params.require(:report).permit(:name, :state, :started_at, :finished_at, :line_count, :file_name, :file_path)
+        params.permit(:rp_available_reports_id, :name, :state, :mime_type, :queued_at, :dsn, :db_unit, :batch_size, :msg_model, :mime_type, :file_ext)
+        .merge(created_by: try(:current_user).try(:name) || '',
+               protocol: request.protocol, 
+               host: request.host_with_port)
       end
   end
 end

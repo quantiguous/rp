@@ -1,4 +1,9 @@
 Rp::Engine.routes.draw do
-  resources :reports
-  root :to => 'reports#index'
+  resources :available_reports
+  resources :reports do
+    member do
+      get :download
+    end
+  end
+  root :to => 'available_reports#index'
 end

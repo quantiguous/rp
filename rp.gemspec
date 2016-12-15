@@ -17,11 +17,14 @@ Gem::Specification.new do |s|
   s.test_files = Dir["spec/**/*"]
 
   s.add_dependency "rails", "~> 4.2.0"
+  s.add_dependency 'haml-rails'
+  s.add_dependency 'will_paginate'
+  s.add_dependency 'net-scp'
 
   s.add_development_dependency "sqlite3"
   s.add_development_dependency 'rspec-rails'
   s.add_development_dependency 'factory_girl_rails'
   s.add_development_dependency 'shoulda-matchers'
   s.add_development_dependency 'database_cleaner'
-  s.add_development_dependency 'haml-rails'
+  # s.add_development_dependency 'devise'
 end

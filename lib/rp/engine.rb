@@ -1,3 +1,4 @@
+# require 'devise'
 module Rp
   class Engine < ::Rails::Engine
     isolate_namespace Rp

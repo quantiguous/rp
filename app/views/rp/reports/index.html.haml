@@ -1,15 +1,32 @@
-%h1 Listing reports
-
-%table
-  %thead
-    %tr
-      %th
-      %th
-      %th
-
-  %tbody
-    - @available_reports.each do |report|
-      %tr
-        %td= ar.name
-        %td= link_to 'New Report', new_report_path
+%h1 Listing Reports
 %br
+= will_paginate
+%br
+%table{style: 'width: 100%'}
+  %thead{style: 'text-align:center; font-weight:bold;'}
+    %tr
+      %th Id
+      %th Name
+      %th State
+      %th Queued At
+      %th Started at
+      %th Finished at
+      %th Line count
+      %th File name
+      %th File path
+      %th Notify To
+      %th{:colspan => "3"}
+  %tbody{style: 'text-align:center;'}
+    - @reports.each do |report|
+      %tr
+        %td= report.id
+        %td= report.name
+        %td= report.state
+        %td= report.queued_at
+        %td= report.started_at
+        %td= report.finished_at
+        %td= report.line_count
+        %td= report.file_name
+        %td= report.file_path
+        %td= report.notify_to
+        %td= link_to 'Download', download_report_path(report) if report.state == 'COMPLETED' && report.file_path.present?
