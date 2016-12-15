@@ -29,9 +29,9 @@ Steps to create an engine :
                     yield self
                   end                
         The config variable my_config_var can be accessed as Rp.my_config_var in the engine.
-  4. Build gem from the engine :
+  7. Build gem from the engine :
         gem build GEMSPEC_FILE
-  5. Push the gem to rubygems :
+  8. Push the gem to rubygems :
         gem push GEM
 
 Steps to use the engine in a Rails app :
