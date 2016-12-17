@@ -11,18 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161213095850) do
+ActiveRecord::Schema.define(version: 20161217122016) do
 
   create_table "rp_available_reports", force: :cascade do |t|
-    t.string   "name",       null: false
+    t.string   "name",                   null: false
     t.string   "dsn"
     t.string   "db_unit"
     t.string   "batch_size"
     t.string   "msg_model"
     t.string   "mime_type"
     t.string   "file_ext"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.integer  "params_cnt"
+    t.string   "param1",     limit: 500
+    t.string   "param2",     limit: 500
+    t.string   "param3",     limit: 500
+    t.string   "param4",     limit: 500
+    t.string   "param5",     limit: 500
   end
 
   create_table "rp_pending_reports", force: :cascade do |t|
@@ -50,6 +56,28 @@ ActiveRecord::Schema.define(version: 20161213095850) do
     t.string   "fault_reason"
     t.text     "fault_bitstream"
     t.integer  "rp_available_reports_id"
+    t.string   "param1"
+    t.string   "param2"
+    t.string   "param3"
+    t.string   "param4"
+    t.string   "param5"
+    t.string   "file_url"
+  end
+
+  create_table "rp_settings", force: :cascade do |t|
+    t.string "scheme"
+    t.string "host"
+    t.string "username"
+    t.string "password"
+    t.string "virtual_path"
+  end
+
+  create_table "rp_setups", force: :cascade do |t|
+    t.string "scheme"
+    t.string "host"
+    t.string "username"
+    t.string "password"
+    t.string "virtual_path"
   end
 
   create_table "rp_users", force: :cascade do |t|

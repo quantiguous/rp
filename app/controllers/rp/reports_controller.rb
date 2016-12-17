@@ -10,11 +10,6 @@ module Rp
       @reports = reports.paginate(per_page: 30, page: params[:page])
     end
 
-    # GET /reports/new
-    def new
-      @report = Report.new
-    end
-
     # POST /reports
     def create
       @report = Report.new(report_params)
@@ -25,13 +20,19 @@ module Rp
         render :new
       end
     end
+    
+    def show
+      @report = Report.find(params[:id])
+      respond_to do |format|
+        format.js
+      end      
+    end
 
     def download
       require 'uri/open-scp'
       report = Report.find(params[:id])
       
-      # cmd = "scp://iibadm@#{Rp.host}"
-      data = open("#{report.file_path}/#{report.file_name}").read rescue ""
+      data = open("#{report.file_url}").read rescue ""
       send_data data, filename: report.file_name, type: report.mime_type
     end
 
@@ -43,7 +44,12 @@ module Rp
 
       # Only allow a trusted parameter "white list" through.
       def report_params
-        params.permit(:rp_available_reports_id, :name, :state, :mime_type, :queued_at, :dsn, :db_unit, :batch_size, :msg_model, :mime_type, :file_ext)
+        params.permit(:name, :state, :mime_type, :queued_at, :dsn, :db_unit, :batch_size, :msg_model, :mime_type, :file_ext,
+        :param1_name, :param1_type, :param1_value,
+        :param2_name, :param2_type, :param2_value, 
+        :param3_name, :param3_type, :param3_value, 
+        :param4_name, :param4_type, :param4_value, 
+        :param5_name, :param5_type, :param5_value)
         .merge(created_by: try(:current_user).try(:name) || '',
                protocol: request.protocol, 
                host: request.host_with_port)

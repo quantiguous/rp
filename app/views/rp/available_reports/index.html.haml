@@ -11,6 +11,13 @@
     - @available_reports.each do |report|
       %tr
         %td= report.id
-        %td= report.name       
+        %td= report.name
+        %td= report.params_cnt
         %td
-          = render partial: 'rp/reports/form_tag', :locals => { :report => report }
+          - if report.params_cnt.present? and report.params_cnt > 0
+            = link_to 'Generate', generate_available_report_path(report),  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window'}
+            %div{ id:"modal-window", class:"modal hide fade", role: "dialog", 'aria-labelledby' => "myModalLabel", 'aria-hidden' => "true"}
+          - else
+            = render partial: 'rp/reports/form', locals: { report: report }
+            
+            
