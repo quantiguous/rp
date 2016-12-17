@@ -1,4 +1,5 @@
 Rp::Engine.routes.draw do
+  resources :settings
   resources :available_reports do
     member do
       get :generate

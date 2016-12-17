@@ -1,0 +1,23 @@
+%h1 Setup : 
+
+%table{style: 'width: 100%'}
+  %thead{style: 'text-align:center; font-weight:bold;'}
+    %tr
+      %th Scheme
+      %th Host
+      %th Username
+      %th Virtual Path
+      %th
+      %th
+
+  %tbody{style: 'text-align:center;'}
+    - @settings.each do |setting|
+      %tr
+        %td= setting.scheme
+        %td= setting.host
+        %td= setting.username
+        %td= setting.virtual_path
+        %td= link_to 'Edit', edit_setting_path(setting)
+
+%br
+
