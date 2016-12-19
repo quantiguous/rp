@@ -10,13 +10,13 @@ module Rp
     accepts_nested_attributes_for :pending_report
     attr_accessor :protocol, :host
     
-    before_validation :enqueue_report
+    before_save :enqueue_report
     after_create :set_report_url
 
     private
     
     def enqueue_report
-      self.pending_report = Rp::PendingReport.new(broker_uuid: Rp.broker_uuid, created_at: Time.now)
+      self.pending_report = Rp::PendingReport.new(created_at: Time.now)
     end
 
     def set_report_url

@@ -2,8 +2,6 @@ require "rp/engine"
 
 module Rp
   mattr_accessor :generator_class
-  mattr_accessor :broker_uuid
-  mattr_accessor :host
   mattr_accessor :root_url
   
   def self.generator_class
