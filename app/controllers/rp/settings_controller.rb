@@ -22,6 +22,7 @@ module Rp
     # GET /setups
     def index
       @settings = Setting.all
+      @settings_count = @settings.count
     end
 
     # GET /setups/1/edit
