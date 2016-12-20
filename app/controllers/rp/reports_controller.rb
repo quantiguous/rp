@@ -29,12 +29,20 @@ module Rp
     end
 
     def download
+      require 'uri'
       require 'uri/open-scp'
       report = Report.find(params[:id])
-      
+
       begin
-        data = open("#{report.file_url}").read
-        send_data data, filename: report.file_name, type: report.mime_type      
+        uri = URI(report.file_url)
+        if uri.scheme == "scp"
+          data = open("#{report.file_url}").read
+          send_data data, filename: report.file_name, type: report.mime_type
+        elsif uri.scheme == "file"
+          send_file uri.path, filename: report.file_name, type: report.mime_type
+        else
+          raise "Not Implemented"
+        end
       rescue StandardError => e
         redirect_to reports_path, notice: e.message
       end
