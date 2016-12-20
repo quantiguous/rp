@@ -32,8 +32,20 @@ module Rp
       require 'uri/open-scp'
       report = Report.find(params[:id])
       
-      data = open("#{report.file_url}").read rescue ""
-      send_data data, filename: report.file_name, type: report.mime_type
+      begin
+        data = open("#{report.file_url}").read
+        send_data data, filename: report.file_name, type: report.mime_type      
+      rescue StandardError => e
+        redirect_to reports_path, notice: e.message
+      end
+    end
+
+    def show_fault
+      report = Report.find(params[:id])
+      @fault = report # report responds to fault
+      respond_to do |format|
+        format.js
+      end
     end
 
     private
