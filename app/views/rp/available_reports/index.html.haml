@@ -6,6 +6,8 @@
       %th ID
       %th Name
       %th
+      %th
+      %th
 
   %tbody{style: 'text-align:center;'}
     - @available_reports.each do |report|
@@ -13,12 +15,14 @@
         %td= report.id
         %td= report.name
         %td= report.params_cnt
+        %td= link_to 'Edit', edit_available_report_path(report)
         %td
           - if report.params_cnt.present? and report.params_cnt > 0
             = link_to 'Generate', generate_available_report_path(report),  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window'}
             %div{ id:"modal-window", class:"modal hide fade", role: "dialog", 'aria-labelledby' => "myModalLabel", 'aria-hidden' => "true"}
           - else
             = render partial: 'rp/reports/form', locals: { report: report }
+        %td= link_to 'Destroy', report, :method => :delete, :data => { :confirm => 'Are you sure?' }
             
 %br            
 = link_to 'New Available Report', new_available_report_path

@@ -2,6 +2,7 @@ require_dependency "rp/application_controller"
 
 module Rp
   class AvailableReportsController < ApplicationController
+    before_action :set_report, only: [:edit, :update, :destroy]
 
     def new
       @available_report = AvailableReport.new
@@ -17,6 +18,17 @@ module Rp
       end
     end
 
+    def edit
+    end
+
+    def update
+      if @available_report.update(available_report_params)
+        redirect_to available_reports_path, notice: 'Report was successfully updated.'
+      else
+        render :edit
+      end
+    end
+
     def index
       @available_reports = AvailableReport.order(:name)
     end
@@ -28,6 +40,10 @@ module Rp
       end
     end
     
+    def destroy
+     @available_report.destroy
+     redirect_to available_reports_path, notice: 'Report was successfully deleted.'
+    end
     
     private
       # Use callbacks to share common setup or constraints between actions.
