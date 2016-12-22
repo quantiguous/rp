@@ -2,7 +2,7 @@ require_dependency "rp/application_controller"
 
 module Rp
   class AvailableReportsController < ApplicationController
-    before_action :set_report, only: [:edit, :update, :destroy]
+    before_action :set_report, only: [:generate, :edit, :update, :destroy]
 
     def new
       @available_report = AvailableReport.new
@@ -19,6 +19,7 @@ module Rp
     end
 
     def edit
+      authorize @available_report
     end
 
     def update
@@ -30,17 +31,18 @@ module Rp
     end
 
     def index
-      @available_reports = AvailableReport.order(:name)
+      @available_reports = policy_scope(Rp::AvailableReport).order(:name)
     end
     
     def generate
-      @available_report = AvailableReport.find(params[:id])
+      authorize @available_report
       respond_to do |format|
         format.js
       end
     end
     
     def destroy
+     authorize @available_report
      @available_report.destroy
      redirect_to available_reports_path, notice: 'Report was successfully deleted.'
     end
