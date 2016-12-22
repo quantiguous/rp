@@ -8,7 +8,7 @@ module Rp
     
     has_one :pending_report, foreign_key: 'rp_reports_id', class_name: 'PendingReport'
     accepts_nested_attributes_for :pending_report
-    attr_accessor :protocol, :host
+    attr_accessor :protocol, :host, :run_at
     
     before_save :enqueue_report
     after_create :set_report_url
@@ -16,7 +16,7 @@ module Rp
     private
     
     def enqueue_report
-      self.pending_report = Rp::PendingReport.new(created_at: Time.now)
+      self.pending_report = Rp::PendingReport.new(created_at: Time.now, run_at: self.run_at)
     end
 
     def set_report_url

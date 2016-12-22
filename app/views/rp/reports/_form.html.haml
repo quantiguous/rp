@@ -14,5 +14,8 @@
       = send("#{report["param#{i}"]["param#{i}_type"] || 'text'}_field_tag", "param#{i}_value")
       = hidden_field_tag "param#{i}_type", report.send("param#{i}_type")
       = hidden_field_tag "param#{i}_name", report.send("param#{i}_name")
+  - if params[:schedule] == 'true'
+    = label_tag 'Run At'
+    = datetime_local_field_tag :run_at
   %div
   = submit_tag 'Generate'
