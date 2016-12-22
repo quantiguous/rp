@@ -7,7 +7,7 @@ module Rp
     # GET /reports
     def index
       reports = policy_scope(Rp::Report).order('id desc')
-      @reports = reports.paginate(per_page: 30, page: params[:page])
+      @reports = reports.paginate(per_page: 10, page: params[:page])
     end
 
     # POST /reports
@@ -19,6 +19,13 @@ module Rp
       else
         render :new
       end
+    end
+
+    def show
+      @report = Report.find(params[:id])
+      respond_to do |format|
+        format.js
+      end      
     end
 
     def download

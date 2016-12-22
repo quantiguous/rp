@@ -1,10 +1,16 @@
+%br
+- if policy(@available_reports.first).edit?
+  = link_to 'New Available Report', new_available_report_path
+
 %h1 Listing Available Reports
 %br
-%table{style: 'width: 50%'}
+= will_paginate
+%table.rp-table
   %thead{style: 'text-align:center; font-weight:bold;'}
     %tr
       %th ID
       %th Name
+      %th
       %th
       %th
 
@@ -26,9 +32,7 @@
           %td
             = link_to 'Schedule', generate_available_report_path(report, schedule: true),  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window'}
             %div{ id:"modal-window", class:"modal hide fade", role: "dialog", 'aria-labelledby' => "myModalLabel", 'aria-hidden' => "true"}
+        - else
+          %td
         - if policy(report).destroy?
           %td= link_to 'Destroy', report, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-/ - if policy(@available_reports.first).edit?
-= link_to 'New Available Report', new_available_report_path

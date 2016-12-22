@@ -10,12 +10,18 @@
   = hidden_field_tag :file_ext, report.file_ext
   - if report.params_cnt.present? and report.params_cnt > 0
     - (1..report.params_cnt).each do |i|
-      = label_tag report["param#{i}"]["param#{i}_name"] || "Parameter #{i}"
-      = send("#{report["param#{i}"]["param#{i}_type"] || 'text'}_field_tag", "param#{i}_value")
-      = hidden_field_tag "param#{i}_type", report.send("param#{i}_type")
-      = hidden_field_tag "param#{i}_name", report.send("param#{i}_name")
+      %table.rp-modal-table
+        %tr
+          %td
+            = label_tag report["param#{i}"]["param#{i}_name"] || "Parameter #{i}"
+          %td
+            = send("#{report["param#{i}"]["param#{i}_type"] || 'text'}_field_tag", "param#{i}_value")
+            = hidden_field_tag "param#{i}_type", report.send("param#{i}_type")
+            = hidden_field_tag "param#{i}_name", report.send("param#{i}_name")
   - if params[:schedule] == 'true'
-    = label_tag 'Run At'
-    = datetime_local_field_tag :run_at
+    %table.rp-modal-table
+      %tr
+        %td= label_tag 'Run At'
+        %td= datetime_local_field_tag :run_at
   %div
-  = submit_tag 'Generate'
+    = submit_tag 'Generate', class: 'rp-btn'
