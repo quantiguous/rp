@@ -1,5 +1,5 @@
 .modal-header
   %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
-  %h3#myModalLabel Parameters
-.modal-body
-  = render 'rp/reports/form', report: report
+  %h3#myModalLabel
+  .modal-body
+    = render 'rp/reports/form', report: report

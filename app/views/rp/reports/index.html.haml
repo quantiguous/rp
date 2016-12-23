@@ -9,6 +9,7 @@
       %th Name
       %th State
       %th Queued At
+      %th Sceduled At
       %th Started at
       %th Finished at
       %th Line count
@@ -24,6 +25,7 @@
         %td= report.name
         %td= report.state
         %td= report.queued_at
+        %td= report.pending_report.try(:run_at)
         %td= report.started_at
         %td= report.finished_at
         %td= report.line_count
@@ -32,6 +34,6 @@
         %td= report.notify_to
         - if report.state == 'COMPLETED'
           %td= link_to 'Download', download_report_path(report)
-        - else
+        - elsif report.state == 'FAILED'
           %td= link_to 'Fault', show_fault_report_path(report.id),  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window'}
 %div{ id:"modal-window", class:"modal hide fade", role: "dialog", 'aria-labelledby' => "myModalLabel", 'aria-hidden' => "true"}
