@@ -31,7 +31,8 @@ module Rp
     end
 
     def index
-      @available_reports = policy_scope(Rp::AvailableReport).order(:name)
+      available_reports = policy_scope(Rp::AvailableReport).order(:name)
+      @available_reports = available_reports.paginate(per_page: 30, page: params[:page])
     end
     
     def generate

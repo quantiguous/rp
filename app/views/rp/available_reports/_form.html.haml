@@ -1,33 +1,28 @@
-= form_for @available_report do |f|
+= form_for @available_report, html: {class:'rp-form-horizontal'} do |f|
   - if @available_report.errors.any?
     #error_explanation
       %h2= "#{pluralize(@available_report.errors.count, "error")} prohibited this setup from being saved:"
       %ul
         - @available_report.errors.full_messages.each do |msg|
           %li= msg
-  .field
-    = f.label :name
-    %br/
+
+  .rp-control-group
+    = f.label :name, class: 'rp-control-label'
     = f.text_field :name
-  .field
-    = f.label :dsn
-    %br/
+  .rp-control-group
+    = f.label :dsn, class: 'rp-control-label'
     = f.text_field :dsn
-  .field
-    = f.label :db_unit
-    %br/
+  .rp-control-group
+    = f.label :db_unit, class: 'rp-control-label'
     = f.text_field :db_unit
-  .field
-    = f.label :batch_size
-    %br/
+  .rp-control-group
+    = f.label :batch_size, class: 'rp-control-label'
     = f.text_field :batch_size
-  .field
-    = f.label :mime_type
-    %br/
+  .rp-control-group
+    = f.label :mime_type, class: 'rp-control-label'
     = f.text_field :mime_type
-  .field
-    = f.label :file_ext
-    %br/
+  .rp-control-group
+    = f.label :file_ext, class: 'rp-control-label'
     = f.text_field :file_ext
   .fieldset
     %table.table.datatable
@@ -46,6 +41,6 @@
             %td
               = f.select "param#{i}_type", Rp::AvailableReport.param_types.map { |key, value| [key.humanize, key] }
   .actions
-    = f.submit 'Save'
-    = link_to 'Back', available_reports_path
+    = f.submit 'Save', class: "rp-btn rp-btn-primary"
+    = link_to 'Cancel', available_reports_path, class: "rp-btn"
     

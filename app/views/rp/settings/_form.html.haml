@@ -1,30 +1,25 @@
-= form_for @setting do |f|
+= form_for @setting, html: {class:'rp-form-horizontal'} do |f|
   - if @setting.errors.any?
     #error_explanation
       %h2= "#{pluralize(@setting.errors.count, "error")} prohibited this setup from being saved:"
       %ul
         - @setting.errors.full_messages.each do |msg|
           %li= msg
-  .field
-    = f.label :scheme
-    %br/
+  .rp-control-group
+    = f.label :scheme, class: 'rp-control-label'
     = f.text_field :scheme
-  .field
-    = f.label :host
-    %br/
+  .rp-control-group
+    = f.label :host, class: 'rp-control-label'
     = f.text_field :host
-  .field
-    = f.label :username
-    %br/
+  .rp-control-group
+    = f.label :username, class: 'rp-control-label'
     = f.text_field :username
-  .field
-    = f.label :password
-    %br/
+  .rp-control-group
+    = f.label :password, class: 'rp-control-label'
     = f.password_field :password
-  .field
-    = f.label :virtual_path
-    %br/
+  .rp-control-group
+    = f.label :virtual_path, class: 'rp-control-label'
     = f.text_field :virtual_path
   .actions
-    = f.submit 'Save'
-    = link_to 'Back', settings_path
+    = f.submit 'Save', class: "rp-btn rp-btn-primary"
+    = link_to 'Cancel', settings_path, class: "rp-btn"
