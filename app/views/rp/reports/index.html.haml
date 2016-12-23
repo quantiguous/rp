@@ -16,7 +16,6 @@
       %th File name
       %th File path
       %th
-      %th{:colspan => "3"}
   %tbody{style: 'text-align:center;'}
     - @reports.each do |report|
       %tr
@@ -33,7 +32,7 @@
         - if report.state == 'COMPLETED'
           -if report.line_count > 0 and policy(report).download?
             %td= link_to 'Download', download_report_path(report)
-          - elsif report.line_count.nil?
+          - elsif report.line_count == 0
             %td NO DATA FOUND
         - elsif report.state == 'FAILED'
           %td= link_to 'Fault', show_fault_report_path(report.id),  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window'}
