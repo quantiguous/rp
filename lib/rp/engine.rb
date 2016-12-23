@@ -1,4 +1,5 @@
-# require 'devise'
+require 'pundit'
+
 module Rp
   class Engine < ::Rails::Engine
     isolate_namespace Rp
@@ -10,7 +11,7 @@ module Rp
       g.assets false
       g.helper false
     end
-
+    
     initializer :append_migrations do |app|
       unless app.root.to_s.match "#{root}/"
         config.paths['db/migrate'].expanded.each do |expanded_path|

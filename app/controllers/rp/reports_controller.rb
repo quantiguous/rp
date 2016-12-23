@@ -6,7 +6,7 @@ module Rp
 
     # GET /reports
     def index
-      reports = Report.order('id desc')
+      reports = policy_scope(Rp::Report).order('id desc')
       @reports = reports.paginate(per_page: 30, page: params[:page])
     end
 
@@ -20,18 +20,13 @@ module Rp
         render :new
       end
     end
-    
-    def show
-      @report = Report.find(params[:id])
-      respond_to do |format|
-        format.js
-      end      
-    end
 
     def download
       require 'uri'
       require 'uri/open-scp'
       report = Report.find(params[:id])
+      
+      authorize report
 
       begin
         uri = URI(report.file_url)
@@ -70,7 +65,7 @@ module Rp
         :param3_name, :param3_type, :param3_value, 
         :param4_name, :param4_type, :param4_value, 
         :param5_name, :param5_type, :param5_value)
-        .merge(created_by: try(:current_user).try(:name) || '',
+        .merge(created_by: try(:current_user).try(:id) || '',
                protocol: request.protocol, 
                host: request.host_with_port)
       end

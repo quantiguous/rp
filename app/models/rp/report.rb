@@ -13,6 +13,10 @@ module Rp
     before_save :enqueue_report
     after_create :set_report_url
 
+    def created_by
+      self[:created_by].to_i
+    end
+    
     private
     
     def enqueue_report

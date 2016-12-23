@@ -33,7 +33,8 @@
         %td= report.file_path
         %td= report.notify_to
         - if report.state == 'COMPLETED'
-          %td= link_to 'Download', download_report_path(report)
+          -if report.line_count > 0 and policy(report).download?
+            %td= link_to 'Download', download_report_path(report)
         - elsif report.state == 'FAILED'
           %td= link_to 'Fault', show_fault_report_path(report.id),  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window'}
 %div{ id:"modal-window", class:"modal hide fade", role: "dialog", 'aria-labelledby' => "myModalLabel", 'aria-hidden' => "true"}
