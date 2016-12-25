@@ -13,16 +13,14 @@
       %th
       %th
       %th
+      %th
+      %th
 
   %tbody{style: 'text-align:center;'}
     - @available_reports.each do |report|
       %tr
         %td= report.id
         %td= report.name
-        - if policy(report).edit?
-          %td= link_to 'Edit', edit_available_report_path(report)
-        - else
-          %td
         - if policy(report).generate?
           %td
             - if report.params_cnt.present? and report.params_cnt > 0
@@ -34,5 +32,14 @@
             %div{ id:"modal-window", class:"modal hide fade", role: "dialog", 'aria-labelledby' => "myModalLabel", 'aria-hidden' => "true"}
         - else
           %td
+          %td
+        - if policy(report).edit?
+          %td= link_to 'Edit', edit_available_report_path(report)
+        - else
+          %td
+        - if policy(report).add_authorized_user?
+          %td= link_to 'View Authorized Users', authorized_users_path(available_report_id: report.id)
         - if policy(report).destroy?
           %td= link_to 'Destroy', report, :method => :delete, :data => { :confirm => 'Are you sure?' }
+            
+          

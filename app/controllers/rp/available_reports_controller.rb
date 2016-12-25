@@ -2,7 +2,7 @@ require_dependency "rp/application_controller"
 
 module Rp
   class AvailableReportsController < ApplicationController
-    before_action :set_report, only: [:generate, :edit, :update, :destroy]
+    before_action :set_report, only: [:generate, :edit, :update, :destroy, :add_authorized_user]
 
     def new
       @available_report = AvailableReport.new
@@ -46,6 +46,14 @@ module Rp
      authorize @available_report
      @available_report.destroy
      redirect_to available_reports_path, notice: 'Report was successfully deleted.'
+    end
+    
+    def add_authorized_user
+      authorize @available_report
+      @authorized_user = @available_report.authorized_users.build
+      respond_to do |format|
+        format.js
+      end
     end
     
     private

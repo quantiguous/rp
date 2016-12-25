@@ -46,7 +46,7 @@ module Rp
 
       # Only allow a trusted parameter "white list" through.
       def setting_params
-        params.require(:setting).permit(:scheme, :host, :username, :port, :virtual_url)
+        params.require(:setting).permit(:scheme, :host, :username, :port, :virtual_url, :max_age_days, :max_per_user)
       end
   end
 end

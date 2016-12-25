@@ -6,7 +6,9 @@ module Rp
     store :param4, accessors: [:param4_name, :param4_type, :param4_value], coder: JSON
     store :param5, accessors: [:param5_name, :param5_type, :param5_value], coder: JSON
     
-    has_one :pending_report, foreign_key: 'rp_reports_id', class_name: 'PendingReport'
+    validate :params_should_be_correct
+    
+    has_one :pending_report
     accepts_nested_attributes_for :pending_report
     attr_accessor :protocol, :host, :run_at
     
@@ -25,6 +27,20 @@ module Rp
 
     def set_report_url
       self.update_column(:report_url, "#{self.protocol}#{self.host}#{Rp.root_url}/reports/#{self.id}")
+    end
+    
+    def params_should_be_correct
+      validate_param(:param1, param1_name, param1_type, param1_value)
+      validate_param(:param2, param2_name, param2_type, param2_value)
+      validate_param(:param3, param3_name, param3_type, param3_value)
+      validate_param(:param4, param4_name, param4_type, param4_value)
+      validate_param(:param5, param5_name, param5_type, param5_value)
+    end
+  
+    def validate_param(attr_name, param_name, param_type, param_value)
+      errors.add(attr_name, "can't be blank") if param_name.present? and param_value.blank?
+      DateTime.parse param_value rescue errors.add(attr_name, "is not a date") if param_type == "date"
+      errors.add(attr_name, "is longer than maximum (50)") if param_type == "text" and param_value.length > 50
     end
   end
 end

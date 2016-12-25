@@ -17,7 +17,7 @@ module Rp
       if @report.save
         redirect_to reports_path, notice: 'Report was successfully created.'
       else
-        render :new
+        redirect_to available_reports_path, notice: @report.errors.full_messages        
       end
     end
 

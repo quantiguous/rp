@@ -11,30 +11,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161217122016) do
+ActiveRecord::Schema.define(version: 20161223143345) do
+
+  create_table "rp_authorized_users", force: :cascade do |t|
+    t.integer "available_report_id"
+    t.integer "user_id"
+  end
+
+  add_index "rp_authorized_users", ["available_report_id", "user_id"], name: "index_rp_authorized_users_on_available_report_id_and_user_id", unique: true
 
   create_table "rp_available_reports", force: :cascade do |t|
-    t.string   "name",                   null: false
+    t.string   "name",                                 null: false
     t.string   "dsn"
     t.string   "db_unit"
     t.string   "batch_size"
     t.string   "msg_model"
     t.string   "mime_type"
     t.string   "file_ext"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
     t.integer  "params_cnt"
     t.string   "param1",     limit: 500
     t.string   "param2",     limit: 500
     t.string   "param3",     limit: 500
     t.string   "param4",     limit: 500
     t.string   "param5",     limit: 500
+    t.string   "is_public",              default: "Y"
   end
 
   create_table "rp_pending_reports", force: :cascade do |t|
-    t.string   "broker_uuid",   limit: 500
+    t.string   "broker_uuid", limit: 500
     t.datetime "created_at"
-    t.integer  "rp_reports_id"
+    t.integer  "report_id"
+    t.datetime "run_at"
   end
 
   create_table "rp_reports", force: :cascade do |t|
@@ -62,14 +71,17 @@ ActiveRecord::Schema.define(version: 20161217122016) do
     t.string   "param4"
     t.string   "param5"
     t.string   "file_url"
+    t.string   "email_alert_ref_no"
   end
 
   create_table "rp_settings", force: :cascade do |t|
-    t.string "scheme"
-    t.string "host"
-    t.string "username"
-    t.string "password"
-    t.string "virtual_path"
+    t.string  "scheme"
+    t.string  "host"
+    t.string  "username"
+    t.string  "password"
+    t.string  "virtual_path"
+    t.integer "max_age_days"
+    t.integer "max_per_user"
   end
 
   create_table "rp_setups", force: :cascade do |t|

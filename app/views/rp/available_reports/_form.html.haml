@@ -24,9 +24,6 @@
   .rp-control-group
     = f.label :file_ext, class: 'rp-control-label'
     = f.text_field :file_ext
-  .rp-control-group
-    = f.label :is_public, class: 'rp-control-label'
-    = f.check_box :is_public, {},"Y","N"
   .fieldset
     %table.table.datatable
       %thead
@@ -43,6 +40,9 @@
               = f.text_field "param#{i}_name"
             %td
               = f.select "param#{i}_type", Rp::AvailableReport.param_types.map { |key, value| [key.humanize, key] }
+  .rp-control-group
+    = f.label :is_public, class: 'rp-control-label'
+    = f.check_box :is_public, {},"Y","N"
   .actions
     = f.submit 'Save', class: "rp-btn rp-btn-primary"
     = link_to 'Cancel', available_reports_path, class: "rp-btn"
