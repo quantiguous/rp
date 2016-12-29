@@ -11,6 +11,7 @@ Rp::Engine.routes.draw do
     member do
       get :download
       get :show_fault
+      post :retry
     end
   end
   root :to => 'available_reports#index'

@@ -7,8 +7,6 @@
       %th Scheme
       %th Host
       %th Username
-      %th Virtual Path
-      %th
       %th
 
   %tbody{style: 'text-align:center;'}
@@ -17,9 +15,11 @@
         %td= setting.scheme
         %td= setting.host
         %td= setting.username
-        %td= setting.virtual_path
-        %td= link_to 'Edit', edit_setting_path(setting)
+        - if policy(setting).edit?
+          %td= link_to 'Edit', edit_setting_path(setting)
+        - else
+          %td
 
 %br
 
-= link_to 'New Setting', new_setting_path unless @settings_count > 0
+= link_to 'New Setting', new_setting_path if @settings_count == 0 && policy(Rp::Setting).new?

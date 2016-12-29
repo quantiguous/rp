@@ -2,7 +2,7 @@ require_dependency "rp/application_controller"
 
 module Rp
   class ReportsController < ApplicationController
-    before_action :set_report, only: [:destroy]
+    before_action :set_report, only: [:destroy, :retry]
 
     # GET /reports
     def index
@@ -37,10 +37,10 @@ module Rp
 
       begin
         uri = URI(report.file_url)
-        if uri.scheme == "scp"
+        if uri.scheme == Setting::FILE_SCHEMES[:scp]
           data = open("#{report.file_url}").read
           send_data data, filename: report.file_name, type: report.mime_type
-        elsif uri.scheme == "file"
+        elsif uri.scheme == Setting::FILE_SCHEMES[:file]
           send_file uri.path, filename: report.file_name, type: report.mime_type
         else
           raise "Not Implemented"
@@ -56,6 +56,11 @@ module Rp
       respond_to do |format|
         format.js
       end
+    end
+    
+    def retry
+      @report.enqueue_report
+      redirect_to reports_path
     end
 
     private

@@ -16,6 +16,7 @@
       %th File name
       %th File path
       %th
+      %th
   %tbody{style: 'text-align:center;'}
     - @reports.each do |report|
       %tr
@@ -30,12 +31,16 @@
         %td= report.file_name
         %td= report.file_path
         - if report.state == 'COMPLETED'
-          -if report.line_count > 0 and policy(report).download?
+          -if report.line_count #> 0 and policy(report).download?
             %td= link_to 'Download', download_report_path(report)
           - elsif report.line_count == 0
             %td NO DATA FOUND
         - elsif report.state == 'FAILED'
           %td= link_to 'Fault', show_fault_report_path(report.id),  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window'}
+        - else
+          %td
+        - if report.state == 'NEW' && policy(report).retry?
+          %td= link_to 'Retry', retry_report_path(report), method: :post
         - else
           %td
 %div{ id:"modal-window", class:"modal hide fade", role: "dialog", 'aria-labelledby' => "myModalLabel", 'aria-hidden' => "true"}

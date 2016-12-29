@@ -7,7 +7,8 @@
           %li= msg
   .rp-control-group
     = f.label :scheme, class: 'rp-control-label'
-    = f.text_field :scheme
+    / = f.text_field :scheme
+    = f.select :scheme, Rp::Setting::FILE_SCHEMES
   .rp-control-group
     = f.label :host, class: 'rp-control-label'
     = f.text_field :host
@@ -17,9 +18,9 @@
   .rp-control-group
     = f.label :password, class: 'rp-control-label'
     = f.password_field :password
-  .rp-control-group
-    = f.label :virtual_path, class: 'rp-control-label'
-    = f.text_field :virtual_path
+  / .rp-control-group
+  /   = f.label :virtual_path, class: 'rp-control-label'
+  /   = f.text_field :virtual_path
   .rp-control-group
     = f.label :max_age_days, class: 'rp-control-label'
     = f.number_field :max_age_days

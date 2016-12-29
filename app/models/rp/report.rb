@@ -12,18 +12,18 @@ module Rp
     accepts_nested_attributes_for :pending_report
     attr_accessor :protocol, :host, :run_at
     
-    before_save :enqueue_report
+    before_validation :enqueue_report
     after_create :set_report_url
 
     def created_by
       self[:created_by].to_i
     end
     
-    private
-    
     def enqueue_report
       self.pending_report = Rp::PendingReport.new(created_at: Time.now, run_at: self.run_at)
     end
+
+    private
 
     def set_report_url
       self.update_column(:report_url, "#{self.protocol}#{self.host}#{Rp.root_url}/reports/#{self.id}")
@@ -41,6 +41,7 @@ module Rp
       errors.add(attr_name, "can't be blank") if param_name.present? and param_value.blank?
       DateTime.parse param_value rescue errors.add(attr_name, "is not a date") if param_type == "date"
       errors.add(attr_name, "is longer than maximum (50)") if param_type == "text" and param_value.length > 50
+      errors.add(attr_name, "should not include special characters") if param_type == "text" and (param_value =~ /[A-Za-z0-9]+$/).nil?
     end
   end
 end
