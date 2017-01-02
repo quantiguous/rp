@@ -2,7 +2,6 @@ require_dependency "rp/application_controller"
 
 module Rp
   class ReportsController < ApplicationController
-    include ReportsHelper
     before_action :set_report, only: [:destroy, :retry]
 
     # GET /reports
@@ -39,13 +38,12 @@ module Rp
       begin
         uri = URI(report.file_url)
         if uri.scheme == Setting::FILE_SCHEMES[:scp]
-          file_url = report.file_url
+          download_file(report)
         elsif uri.scheme == Setting::FILE_SCHEMES[:file]
-          file_url = "#{report.file_path}/#{report.file_name}"
+          send_file uri.path, filename: report.file_name, type: report.mime_type
         else
           raise "Not Implemented"
         end
-        download_file(file_url, report)
       rescue StandardError => e
         redirect_to reports_path, notice: e.message
       end
@@ -68,6 +66,20 @@ module Rp
       # Use callbacks to share common setup or constraints between actions.
       def set_report
         @report = Report.find(params[:id])
+      end
+      
+      def download_file(report)
+        open("#{report.file_url}") do |file|
+          begin
+            tempfile = Tempfile.new(report.file_name).tap do |f|
+              f.write(file.read)
+              f.close
+            end
+            send_file tempfile.path, filename: report.file_name, type: report.mime_type
+          ensure
+            tempfile.close
+          end
+        end
       end
 
       # Only allow a trusted parameter "white list" through.

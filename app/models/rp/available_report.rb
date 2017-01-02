@@ -18,7 +18,6 @@ module Rp
     validates_presence_of :param4_name, unless: "param5_name.blank?", message: "can't be blank when Param5 name is present"
     validates_numericality_of :batch_size, { greater_than_or_equal_to: 1 }
 
-    # before_create :set_param_cnt
     before_save :set_param_cnt, :set_name_in_upcase
     
     def set_name_in_upcase
