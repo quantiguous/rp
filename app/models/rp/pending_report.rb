@@ -2,6 +2,7 @@ module Rp
   class PendingReport < ActiveRecord::Base
     belongs_to :report
     
+    validates_uniqueness_of :report_id
     validate :value_of_run_at
     
     def value_of_run_at
