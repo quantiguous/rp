@@ -11,13 +11,18 @@ module Rp
     store :param4, accessors: [:param4_name, :param4_type], coder: JSON
     store :param5, accessors: [:param5_name, :param5_type], coder: JSON
     
-    validates_presence_of :name    
+    validates_presence_of :name, :dsn, :batch_size, :db_unit 
     validates_presence_of :param1_name, unless: "param2_name.blank?", message: "can't be blank when Param2 name is present"
     validates_presence_of :param2_name, unless: "param3_name.blank?", message: "can't be blank when Param3 name is present"
     validates_presence_of :param3_name, unless: "param4_name.blank?", message: "can't be blank when Param4 name is present"
     validates_presence_of :param4_name, unless: "param5_name.blank?", message: "can't be blank when Param5 name is present"
+    validates_numericality_of :batch_size, { greater_than_or_equal_to: 1 }
 
-    before_create :set_param_cnt
+    before_save :set_param_cnt, :set_name_in_upcase
+    
+    def set_name_in_upcase
+      name.upcase!
+    end
     
     def authorized_user?(user)
       is_public == 'Y' || authorized_users.where(user_id: user.id).exists?

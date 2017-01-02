@@ -16,5 +16,9 @@ module Rp
     def download?
       record.created_by == user.id
     end
+    
+    def retry?
+      record.created_by == user.id
+    end
   end
 end
