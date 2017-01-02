@@ -27,6 +27,9 @@
   .rp-control-group
     = f.label :max_per_user, class: 'rp-control-label'
     = f.number_field :max_per_user
+  .rp-control-group
+    = f.label :query_timeout, 'Query timeout (in seconds)', class: 'rp-control-label'
+    = f.number_field :query_timeout
 
   .actions
     = f.submit 'Save', class: "rp-btn rp-btn-primary"

@@ -42,7 +42,7 @@ module Rp
       end
 
       def setting_params
-        params.require(:setting).permit(:scheme, :host, :username, :password, :port, :virtual_url, :max_age_days, :max_per_user)
+        params.require(:setting).permit(:scheme, :host, :username, :password, :port, :virtual_url, :max_age_days, :max_per_user, :query_timeout)
       end
   end
 end

@@ -7,6 +7,9 @@
       %th Scheme
       %th Host
       %th Username
+      %th Max Age Days
+      %th Max Per User
+      %th Query Timeout
       %th
 
   %tbody{style: 'text-align:center;'}
@@ -15,6 +18,9 @@
         %td= setting.scheme
         %td= setting.host
         %td= setting.username
+        %td= setting.max_age_days
+        %td= setting.max_per_user
+        %td= setting.query_timeout
         - if policy(setting).edit?
           %td= link_to 'Edit', edit_setting_path(setting)
         - else

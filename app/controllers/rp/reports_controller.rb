@@ -2,6 +2,7 @@ require_dependency "rp/application_controller"
 
 module Rp
   class ReportsController < ApplicationController
+    include ReportsHelper
     before_action :set_report, only: [:destroy, :retry]
 
     # GET /reports
@@ -38,13 +39,13 @@ module Rp
       begin
         uri = URI(report.file_url)
         if uri.scheme == Setting::FILE_SCHEMES[:scp]
-          data = open("#{report.file_url}").read
-          send_data data, filename: report.file_name, type: report.mime_type
+          file_url = report.file_url
         elsif uri.scheme == Setting::FILE_SCHEMES[:file]
-          send_file uri.path, filename: report.file_name, type: report.mime_type
+          file_url = "#{report.file_path}/#{report.file_name}"
         else
           raise "Not Implemented"
         end
+        download_file(file_url, report)
       rescue StandardError => e
         redirect_to reports_path, notice: e.message
       end
