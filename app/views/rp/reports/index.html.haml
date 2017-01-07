@@ -23,10 +23,10 @@
         %td= link_to report.id, report_path(report.id),  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window'}
         %td= report.name
         %td= report.state
-        %td= report.queued_at
-        %td= report.pending_report.try(:run_at)
-        %td= report.started_at
-        %td= report.finished_at
+        %td= l report.queued_at 
+        %td= l report.pending_report.try(:run_at)
+        %td= l report.started_at
+        %td= l report.finished_at
         %td= report.line_count
         %td= report.file_name
         %td= report.file_path
