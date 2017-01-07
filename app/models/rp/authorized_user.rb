@@ -18,7 +18,7 @@ module Rp
     end
     
     def role_as_user
-      errors.add(:user_id, "does not have role user") unless user.try(:has_role?, :user)
+      errors.add(:user_id, "is already an editor, and has access to all reports") if user.try(:has_role?, :editor)
     end    
   end
 end
