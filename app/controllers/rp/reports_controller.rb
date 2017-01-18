@@ -71,8 +71,9 @@ module Rp
       def download_file(report)
         open("#{report.file_url}") do |file|
           begin
-            tempfile = Tempfile.new(report.file_name).tap do |f|
-              f.write(file.read)
+            file_content = file.read
+            tempfile = Tempfile.new(report.file_name, encoding: file_content.encoding).tap do |f|
+              f.write(file_content)
               f.close
             end
             send_file tempfile.path, filename: report.file_name, type: report.mime_type
