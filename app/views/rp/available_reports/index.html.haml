@@ -1,5 +1,5 @@
 %br
-- if policy(@available_reports.first).edit?
+- if policy(Rp::AvailableReport).edit?
   = link_to 'New Available Report', new_available_report_path
 
 %h1 Listing Available Reports
