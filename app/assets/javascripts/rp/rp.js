@@ -29,4 +29,14 @@ $(document).ready(function(){
     $('#setting_username').prop('readOnly',false);
     $('#setting_password').prop('readOnly',false);
   }
+    
+  $(".generate-rp-link").click(function(){
+    apply_datepicker();
+  })
 });
+
+function apply_datepicker(){
+  setTimeout(function(){ 
+    $('.rp_date').find("input[type='text']").datepicker({dateFormat: "yy-mm-dd"});
+  }, 100);
+}

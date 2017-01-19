@@ -24,7 +24,7 @@
         - if policy(report).generate?
           %td
             - if report.params_cnt.present? and report.params_cnt > 0
-              = link_to 'Generate', generate_available_report_path(report),  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window'}
+              = link_to 'Generate', generate_available_report_path(report),  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', :class=>"generate-rp-link"}
             - else
               = render partial: 'rp/reports/form', locals: { report: report }
           %td
