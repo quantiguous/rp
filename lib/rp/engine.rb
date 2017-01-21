@@ -1,9 +1,13 @@
 require 'pundit'
 
 module Rp
+  mattr_accessor :editor_role do
+    :editor
+  end
+
   class Engine < ::Rails::Engine
     isolate_namespace Rp
-    
+        
     config.generators do |g|
       g.test_framework :rspec, :fixture => false
       g.fixture_replacement :factory_girl, :dir => 'spec/factories'

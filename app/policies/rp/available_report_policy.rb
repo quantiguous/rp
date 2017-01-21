@@ -9,7 +9,7 @@ module Rp
       end
 
       def resolve        
-        if user.has_role? :editor
+        if user.has_role? Rp.editor_role
           # if she's an editor, she cal manage all 
           scope.all
         else
@@ -26,17 +26,17 @@ module Rp
 
     # editor only action
     def edit?      
-      user.has_role? :editor
+      user.has_role? Rp.editor_role
     end
 
     # editor only action
     def add_authorized_user?
-      user.has_role? :editor
+      user.has_role? Rp.editor_role
     end
     
     # editor only action        
     def destroy?
-      user.has_role? :editor
+      user.has_role? Rp.editor_role
     end
   end
 end
