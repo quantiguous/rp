@@ -1,6 +1,9 @@
 module Rp
   class AvailableReport < ActiveRecord::Base
     enum param_types: [:number, :date, :text]
+    MIME_TYPES = %w(text/csv text/plain)
+    FILE_EXT = %w(csv txt)
+    MONEY_FORMATS = %w(###,###,##0.00 ########0.00)
     
     has_many :authorized_users
     has_many :users, through: :authorized_users, class_name: "User"
@@ -18,7 +21,7 @@ module Rp
     validates_presence_of :param4_name, unless: "param5_name.blank?", message: "can't be blank when Param5 name is present"
     validates_numericality_of :batch_size, { greater_than_or_equal_to: 1 }
 
-    before_save :set_param_cnt, :set_name_in_upcase
+    before_save :set_param_cnt, :set_name_in_upcase, :set_file_ext
     
     def set_name_in_upcase
       name.upcase!
@@ -43,6 +46,11 @@ module Rp
       authorized_and_public = AvailableReport.joins(join).union(:all, available_report.project(available_report[Arel.star]).where(available_report[:is_public].eq('Y')))          
       
       AvailableReport.from(available_report.create_table_alias(authorized_and_public, 'rp_available_reports'))
+    end
+    
+    def set_file_ext
+      index = MIME_TYPES.find_index(mime_type)
+      self.file_ext = FILE_EXT[index]
     end
     
     private

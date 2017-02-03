@@ -16,6 +16,15 @@
     = f.label :db_unit, class: 'rp-control-label'
     = f.text_field :db_unit
   .rp-control-group
+    = f.label :mime_type, class: 'rp-control-label'
+    = f.select :mime_type, Rp::AvailableReport::MIME_TYPES.map { |key, value| [key, key] }
+  .rp-control-group
+    = f.label :data_header, class: 'rp-control-label'
+    = f.check_box :data_header, {},"Y","N"
+  .rp-control-group
+    = f.label :money_format, class: 'rp-control-label'
+    = f.select :money_format, Rp::AvailableReport::MONEY_FORMATS.map { |key, value| [key, key] }
+  .rp-control-group
     = f.label :batch_size, class: 'rp-control-label'
     = f.number_field :batch_size
   .fieldset
