@@ -8,6 +8,8 @@
   = hidden_field_tag :batch_size, report.batch_size
   = hidden_field_tag :msg_model, report.msg_model
   = hidden_field_tag :file_ext, report.file_ext
+  = hidden_field_tag :data_header, report.data_header
+  = hidden_field_tag :money_format, report.money_format
   - if report.params_cnt.present? and report.params_cnt > 0
     - (1..report.params_cnt).each do |i|
       %table.rp-modal-table
