@@ -21,7 +21,7 @@ module Rp
     validates_presence_of :param4_name, unless: "param5_name.blank?", message: "can't be blank when Param5 name is present"
     validates_numericality_of :batch_size, { greater_than_or_equal_to: 1 }
 
-    before_save :set_param_cnt, :set_name_in_upcase, :set_mime_type
+    before_save :set_param_cnt, :set_name_in_upcase, :set_file_ext
     
     def set_name_in_upcase
       name.upcase!
@@ -48,7 +48,7 @@ module Rp
       AvailableReport.from(available_report.create_table_alias(authorized_and_public, 'rp_available_reports'))
     end
     
-    def set_mime_type
+    def set_file_ext
       if mime_type == MIME_TYPES[0]
         self.file_ext = FILE_EXT[0]
       elsif mime_type == MIME_TYPES[1]
