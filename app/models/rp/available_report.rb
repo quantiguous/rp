@@ -49,11 +49,8 @@ module Rp
     end
     
     def set_file_ext
-      if mime_type == MIME_TYPES[0]
-        self.file_ext = FILE_EXT[0]
-      elsif mime_type == MIME_TYPES[1]
-        self.file_ext = FILE_EXT[1]
-      end
+      index = MIME_TYPES.find_index(mime_type)
+      self.file_ext = FILE_EXT[index]
     end
     
     private
