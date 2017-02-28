@@ -4,6 +4,7 @@ module Rp
     MIME_TYPES = %w(text/csv text/plain)
     FILE_EXT = %w(csv txt)
     MONEY_FORMATS = %w(###,###,##0.00 ########0.00)
+    HEADER_KINDS = [['Column Header', 'C'], ['Data Header', 'D'], ['None', 'N']]
     
     has_many :authorized_users
     has_many :users, through: :authorized_users, class_name: "User"

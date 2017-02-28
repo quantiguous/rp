@@ -19,11 +19,14 @@
     = f.label :mime_type, class: 'rp-control-label'
     = f.select :mime_type, Rp::AvailableReport::MIME_TYPES.map { |key, value| [key, key] }
   .rp-control-group
-    = f.label :data_header, class: 'rp-control-label'
-    = f.check_box :data_header, {},"Y","N"
+    = f.label :header_kind, class: 'rp-control-label'
+    = f.select :header_kind, Rp::AvailableReport::HEADER_KINDS.map { |key, value| [key, value] }
   .rp-control-group
     = f.label :money_format, class: 'rp-control-label'
     = f.select :money_format, Rp::AvailableReport::MONEY_FORMATS.map { |key, value| [key, key] }
+  .rp-control-group
+    = f.label :normalize_space, class: 'rp-control-label'
+    = f.check_box :normalize_space, {},"Y","N"
   .rp-control-group
     = f.label :batch_size, class: 'rp-control-label'
     = f.number_field :batch_size
