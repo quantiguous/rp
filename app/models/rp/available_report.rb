@@ -21,6 +21,7 @@ module Rp
     validates_presence_of :param3_name, unless: "param4_name.blank?", message: "can't be blank when Param4 name is present"
     validates_presence_of :param4_name, unless: "param5_name.blank?", message: "can't be blank when Param5 name is present"
     validates_numericality_of :batch_size, { greater_than_or_equal_to: 1 }
+    validate :values_of_delimiter_and_escape_character
 
     before_save :set_param_cnt, :set_name_in_upcase, :set_file_ext
     
@@ -62,6 +63,12 @@ module Rp
       self.params_cnt += 1 unless param3_name.blank?
       self.params_cnt += 1 unless param4_name.blank?
       self.params_cnt += 1 unless param5_name.blank?      
-    end    
+    end
+    
+    def values_of_delimiter_and_escape_character
+      errors.add(:delimiter, "should be ',' when mime_type is text/csv") if mime_type == 'text/csv' && delimiter != ','
+      errors.add(:escape_character, 'should be " when mime_type is text/csv') if mime_type == 'text/csv' && escape_character != '"'
+      errors.add(:escape_character, "can't be same as the delimiter") if delimiter == escape_character
+    end
   end
 end
