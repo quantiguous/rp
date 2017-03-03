@@ -7,23 +7,25 @@ module Rp
     store :param5, accessors: [:param5_name, :param5_type, :param5_value], coder: JSON
     
     validate :params_should_be_correct
+    validate :validate_run_at, if: "run_at.present?"
     
     has_one :pending_report
-    accepts_nested_attributes_for :pending_report
+
     attr_accessor :protocol, :host, :run_at
-    
-    before_validation :enqueue_report
+
+    after_create :create_pending_report
     after_create :set_report_url
 
     def created_by
       self[:created_by].to_i
     end
     
-    def enqueue_report
-      self.pending_report = Rp::PendingReport.new(created_at: Time.now, run_at: self.run_at)
-    end
 
     private
+
+    def create_pending_report
+      self.pending_report = Rp::PendingReport.new(created_at: Time.now, run_at: self.run_at, report_id: self.id)
+    end
 
     def set_report_url
       self.update_column(:report_url, "#{self.protocol}#{self.host}#{Rp.root_url}/reports/#{self.id}")
@@ -42,6 +44,14 @@ module Rp
       DateTime.parse param_value rescue errors.add(attr_name, "is not a date") if param_type == "date"
       errors.add(attr_name, "is longer than maximum (50)") if param_type == "text" and param_value.length > 50
       errors.add(attr_name, "should not include special characters") if param_type == "text" and (param_value =~ /[A-Za-z0-9]+$/).nil?
+    end
+    
+    def validate_run_at
+      run_at_as_date = DateTime.parse(run_at) 
+      errors.add(:run_at, "should be a future date") if run_at_as_date < Time.zone.today
+      errors.add(:run_at, "should be a date within one month") if (Time.zone.today + 30.days) < run_at_as_date
+    rescue 
+      errors.add(:run_at, "is not a date")
     end
   end
 end
