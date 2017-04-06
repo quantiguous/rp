@@ -16,6 +16,9 @@
     = f.label :db_unit, class: 'rp-control-label'
     = f.text_field :db_unit
   .rp-control-group
+    = f.label :msg_model, class: 'rp-control-label'
+    = f.text_field :msg_model
+  .rp-control-group
     = f.label :mime_type, class: 'rp-control-label'
     = f.select :mime_type, Rp::AvailableReport::MIME_TYPES.map { |key, value| [key, key] }
   .rp-control-group
@@ -33,6 +36,9 @@
   .rp-control-group
     = f.label :escape_character, class: 'rp-control-label'
     = f.text_field :escape_character
+  .rp-control-group
+    = f.label :service_code, class: 'rp-control-label'
+    = f.text_field :service_code
   .rp-control-group
     = f.label :batch_size, class: 'rp-control-label'
     = f.number_field :batch_size

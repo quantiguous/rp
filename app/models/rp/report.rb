@@ -11,7 +11,7 @@ module Rp
     
     has_one :pending_report
 
-    attr_accessor :protocol, :host, :run_at
+    attr_accessor :protocol, :host, :run_at, :service_code
 
     after_create :create_pending_report
     after_create :set_report_url
@@ -19,13 +19,12 @@ module Rp
     def created_by
       self[:created_by].to_i
     end
-    
-
-    private
 
     def create_pending_report
-      self.pending_report = Rp::PendingReport.new(created_at: Time.now, run_at: self.run_at, report_id: self.id)
+      self.pending_report = Rp::PendingReport.new(created_at: Time.now, run_at: self.run_at, report_id: self.id, service_code: self.service_code)
     end
+
+    private
 
     def set_report_url
       self.update_column(:report_url, "#{self.protocol}#{self.host}#{Rp.root_url}/reports/#{self.id}")
