@@ -6,12 +6,15 @@ module Rp
     store :param4, accessors: [:param4_name, :param4_type, :param4_value], coder: JSON
     store :param5, accessors: [:param5_name, :param5_type, :param5_value], coder: JSON
     
+    validate :ar_should_exist
     validate :params_should_be_correct
     validate :validate_run_at, if: "run_at.present?"
     
     has_one :pending_report
 
-    attr_accessor :protocol, :host, :run_at
+    attr_accessor :protocol, :host, :run_at, :available_report_id
+    
+    before_save :set_report_values
 
     after_create :create_pending_report
     after_create :set_report_url
@@ -25,6 +28,29 @@ module Rp
     end
 
     private
+    
+    def ar_should_exist
+      errors.add(:available_report_id, "Available Report not found with id #{available_report_id}") if Rp::AvailableReport.find_by_id(self.available_report_id).nil?
+    end
+    
+    def set_report_values
+      ar = Rp::AvailableReport.find(self.available_report_id)
+      self.name = ar.name
+      self.queued_at = Time.now
+      self.state = 'NEW'
+      self.mime_type = ar.mime_type
+      self.dsn = ar.dsn
+      self.db_unit = ar.db_unit
+      self.batch_size = ar.batch_size
+      self.msg_model = ar.msg_model
+      self.file_ext = ar.file_ext
+      self.header_kind = ar.header_kind
+      self.money_format = ar.money_format
+      self.normalize_space = ar.normalize_space
+      self.delimiter = ar.delimiter
+      self.escape_character = ar.escape_character
+      self.service_code = ar.service_code
+    end
 
     def set_report_url
       self.update_column(:report_url, "#{self.protocol}#{self.host}#{Rp.root_url}/reports/#{self.id}")

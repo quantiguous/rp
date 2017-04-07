@@ -1,19 +1,5 @@
 = form_tag(reports_path, method: :post, id: 'generate_form') do
-  = hidden_field_tag :name, report.name
-  = hidden_field_tag :queued_at, Time.now
-  = hidden_field_tag :state, 'NEW'
-  = hidden_field_tag :mime_type, report.mime_type
-  = hidden_field_tag :dsn, report.dsn
-  = hidden_field_tag :db_unit, report.db_unit
-  = hidden_field_tag :batch_size, report.batch_size
-  = hidden_field_tag :msg_model, report.msg_model
-  = hidden_field_tag :file_ext, report.file_ext
-  = hidden_field_tag :header_kind, report.header_kind
-  = hidden_field_tag :money_format, report.money_format
-  = hidden_field_tag :normalize_space, report.normalize_space
-  = hidden_field_tag :delimiter, report.delimiter
-  = hidden_field_tag :escape_character, report.escape_character
-  = hidden_field_tag :service_code, report.service_code
+  = hidden_field_tag :available_report_id, report.id
   - if report.params_cnt.present? and report.params_cnt > 0
     - (1..report.params_cnt).each do |i|
       %table.rp-modal-table
