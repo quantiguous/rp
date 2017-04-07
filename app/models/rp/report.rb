@@ -11,7 +11,7 @@ module Rp
     
     has_one :pending_report
 
-    attr_accessor :protocol, :host, :run_at, :service_code
+    attr_accessor :protocol, :host, :run_at
 
     after_create :create_pending_report
     after_create :set_report_url
