@@ -65,7 +65,7 @@ module Rp
       # Only allow a trusted parameter "white list" through.
       def available_report_params
         params.require(:available_report).permit(:name, :dsn, :db_unit, :batch_size, :is_public, :mime_type,
-        :header_kind, :money_format, :normalize_space, :delimiter, :escape_character,
+        :header_kind, :money_format, :normalize_space, :delimiter, :escape_character, :service_code, :msg_model, 
         :param1_name, :param1_type, 
         :param2_name, :param2_type, 
         :param3_name, :param3_type, 

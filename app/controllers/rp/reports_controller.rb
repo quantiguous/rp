@@ -58,7 +58,7 @@ module Rp
     end
     
     def retry
-      @report.enqueue_report
+      @report.create_pending_report
       redirect_to reports_path
     end
 
@@ -87,7 +87,7 @@ module Rp
       def report_params
         
         params.permit(:name, :state, :mime_type, :queued_at, :dsn, :db_unit, :batch_size, :msg_model, :mime_type, :file_ext, :run_at,
-        :header_kind, :money_format, :normalize_space, :delimiter, :escape_character, 
+        :header_kind, :money_format, :normalize_space, :delimiter, :escape_character, :service_code,
         :param1_name, :param1_type, :param1_value,
         :param2_name, :param2_type, :param2_value, 
         :param3_name, :param3_type, :param3_value, 

@@ -13,6 +13,7 @@
   = hidden_field_tag :normalize_space, report.normalize_space
   = hidden_field_tag :delimiter, report.delimiter
   = hidden_field_tag :escape_character, report.escape_character
+  = hidden_field_tag :service_code, report.service_code
   - if report.params_cnt.present? and report.params_cnt > 0
     - (1..report.params_cnt).each do |i|
       %table.rp-modal-table
