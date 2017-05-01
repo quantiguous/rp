@@ -3,7 +3,6 @@ source 'https://rubygems.org'
 # Declare your gem's dependencies in rp.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
 # development dependencies will be added by default to the :development group.
-gem 'will_paginate'
 gemspec
 
 # Declare any dependencies that are still in development here instead of in

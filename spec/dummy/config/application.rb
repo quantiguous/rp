@@ -10,6 +10,8 @@ require "sprockets/railtie"
 
 Bundler.require(*Rails.groups)
 require "rp"
+require "haml-rails"
+require "will_paginate"
 
 module Dummy
   class Application < Rails::Application

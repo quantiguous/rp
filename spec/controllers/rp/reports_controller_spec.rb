@@ -8,7 +8,7 @@ module Rp
       # @request.env["devise.mapping"] = Devise.mappings[:user]
       # sign_in user
       # allow(controller).to receive(:current_user).and_return(user)
-      Rp.broker_uuid = 'ABC-123-12'
+      user = FactoryGirl.create(:user)
     end
 
     describe "GET #index" do
@@ -18,16 +18,6 @@ module Rp
       it "assigns all reports as @reports" do
         get :index
         expect(assigns(:reports)).to eq([report])
-      end
-    end
-
-    describe "GET #new" do
-
-      let(:report) { FactoryGirl.create(:rp_report) }
-
-      it "assigns a new report as @report" do
-        get :new
-        expect(assigns(:report)).to be_a_new(Report)
       end
     end
 
