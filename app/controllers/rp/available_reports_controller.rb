@@ -2,33 +2,7 @@ require_dependency "rp/application_controller"
 
 module Rp
   class AvailableReportsController < ApplicationController
-    before_action :set_report, only: [:generate, :edit, :update, :destroy, :add_authorized_user]
-
-    def new
-      @available_report = AvailableReport.new
-    end
-    
-    def create
-      @available_report = AvailableReport.new(available_report_params)
-
-      if @available_report.save
-        redirect_to available_reports_path, notice: 'Report was successfully created.'
-      else
-        render :new
-      end
-    end
-
-    def edit
-      authorize @available_report
-    end
-
-    def update
-      if @available_report.update(available_report_params)
-        redirect_to available_reports_path, notice: 'Report was successfully updated.'
-      else
-        render :edit
-      end
-    end
+    before_action :set_report, only: [:generate, :show, :destroy, :add_authorized_user]
 
     def index
       available_reports = policy_scope(Rp::AvailableReport).order(:name)
@@ -64,7 +38,7 @@ module Rp
 
       # Only allow a trusted parameter "white list" through.
       def available_report_params
-        params.require(:available_report).permit(:name, :dsn, :db_unit, :batch_size, :is_public, :mime_type,
+        params.require(:available_report).permit(:code, :name, :dsn, :db_unit, :batch_size, :is_public, :mime_type,
         :header_kind, :money_format, :normalize_space, :delimiter, :escape_character, :service_code, :msg_model, 
         :param1_name, :param1_type, 
         :param2_name, :param2_type, 

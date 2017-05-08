@@ -1,7 +1,3 @@
-%br
-- if policy(Rp::AvailableReport).edit?
-  = link_to 'New Available Report', new_available_report_path
-
 %h1 Listing Available Reports
 %br
 = will_paginate
@@ -33,10 +29,7 @@
         - else
           %td
           %td
-        - if policy(report).edit?
-          %td= link_to 'Edit', edit_available_report_path(report)
-        - else
-          %td
+        %td= link_to 'Show', available_report_path(report)
         - if policy(report).add_authorized_user?
           %td= link_to 'View Authorized Users', authorized_users_path(available_report_id: report.id)
         - if policy(report).destroy?
