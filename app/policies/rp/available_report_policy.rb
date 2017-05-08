@@ -8,7 +8,7 @@ module Rp
         @scope = scope
       end
 
-      def resolve        
+      def resolve
         if user.has_role? Rp.editor_role
           # if she's an editor, she cal manage all 
           scope.all
@@ -22,11 +22,6 @@ module Rp
     # she can generated public reports, and reports to which she is authorized
     def generate?
       record.authorized_user?(user)
-    end
-
-    # editor only action
-    def edit?      
-      user.has_role? Rp.editor_role
     end
 
     # editor only action
