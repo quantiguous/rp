@@ -7,7 +7,10 @@
           %td
             = label_tag report["param#{i}"]["param#{i}_name"] || "Parameter #{i}"
           %td
-            = send("#{report["param#{i}"]["param#{i}_type"] || 'text'}_field_tag", "param#{i}_value")
+            - if report.send("param#{i}_type") == 'datetime'
+              = send('datetime_local_field_tag', "param#{i}_value")
+            - else
+              = send("#{report["param#{i}"]["param#{i}_type"] || 'text'}_field_tag", "param#{i}_value")
             = hidden_field_tag "param#{i}_type", report.send("param#{i}_type")
             = hidden_field_tag "param#{i}_name", report.send("param#{i}_name")
   - if params[:schedule] == 'true'

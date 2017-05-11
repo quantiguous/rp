@@ -1,6 +1,6 @@
 module Rp
   class AvailableReport < ActiveRecord::Base
-    enum param_types: [:number, :date, :text]
+    enum param_types: [:number, :date, :text, :datetime]
     MIME_TYPES = %w(text/csv text/plain)
     FILE_EXT = %w(csv txt)
     MONEY_FORMATS = %w(###,###,##0.00 ########0.00)
@@ -24,11 +24,7 @@ module Rp
     validates_numericality_of :batch_size, { greater_than_or_equal_to: 1 }
     validate :values_of_delimiter_and_escape_character
 
-    before_save :set_param_cnt, :set_name_in_upcase, :set_file_ext
-    
-    def set_name_in_upcase
-      name.upcase!
-    end
+    before_save :set_param_cnt, :set_file_ext
     
     def authorized_user?(user)
       is_public == 'Y' || authorized_users.where(user_id: user.id).exists?

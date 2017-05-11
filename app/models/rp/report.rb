@@ -66,7 +66,7 @@ module Rp
   
     def validate_param(attr_name, param_name, param_type, param_value)
       errors.add(attr_name, "can't be blank") if param_name.present? and param_value.blank?
-      DateTime.parse param_value rescue errors.add(attr_name, "is not a date") if param_type == "date"
+      DateTime.parse param_value rescue errors.add(attr_name, "is not a date") if ["datetime","date"].include?(param_type)
       errors.add(attr_name, "is longer than maximum (50)") if param_type == "text" and param_value.length > 50
       errors.add(attr_name, "should not include special characters") if param_type == "text" and (param_value =~ /[A-Za-z0-9]+$/).nil?
     end
