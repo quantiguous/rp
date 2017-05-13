@@ -14,7 +14,7 @@ module Rp
 
     attr_accessor :protocol, :host, :run_at, :available_report_id
     
-    before_save :set_report_values
+    before_save :set_report_values, :parse_datetime
 
     after_create :create_pending_report
     after_create :set_report_url
@@ -50,6 +50,14 @@ module Rp
       self.delimiter = ar.delimiter
       self.escape_character = ar.escape_character
       self.service_code = ar.service_code
+    end
+    
+    def parse_datetime
+      self.param1_value = Time.parse(param1_value).strftime("%d-%m-%Y %I:%M:%S %p") if param1_type == 'datetime'
+      self.param2_value = Time.parse(param2_value).strftime("%d-%m-%Y %I:%M:%S %p") if param2_type == 'datetime'
+      self.param3_value = Time.parse(param3_value).strftime("%d-%m-%Y %I:%M:%S %p") if param3_type == 'datetime'
+      self.param4_value = Time.parse(param4_value).strftime("%d-%m-%Y %I:%M:%S %p") if param4_type == 'datetime'
+      self.param5_value = Time.parse(param5_value).strftime("%d-%m-%Y %I:%M:%S %p") if param5_type == 'datetime'
     end
 
     def set_report_url
