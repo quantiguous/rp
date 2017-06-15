@@ -6,8 +6,20 @@ module Rp
 
     # GET /reports
     def index
-      reports = policy_scope(Rp::Report).order('id desc')
+      reports = policy_scope(Rp::Report).where(service_code: 'RP').order('id desc')
       @reports = reports.paginate(per_page: 10, page: params[:page])
+    end
+
+    def ft
+      reports = policy_scope(Rp::Report).where(service_code: 'FT').order('id desc')
+      @reports = reports.paginate(per_page: 10, page: params[:page])
+      render 'index'
+    end
+
+    def ic
+      reports = policy_scope(Rp::Report).where(service_code: 'IC').order('id desc')
+      @reports = reports.paginate(per_page: 10, page: params[:page])
+      render 'index'
     end
 
     # POST /reports
