@@ -5,8 +5,20 @@ module Rp
     before_action :set_report, only: [:generate, :show, :destroy, :add_authorized_user]
 
     def index
-      available_reports = policy_scope(Rp::AvailableReport).order(:name)
+      available_reports = policy_scope(Rp::AvailableReport).where(service_code: 'RP').order(:name)
       @available_reports = available_reports.paginate(per_page: 10, page: params[:page])
+    end
+    
+    def ft
+      available_reports = policy_scope(Rp::AvailableReport).where(service_code: 'FT').order(:name)
+      @available_reports = available_reports.paginate(per_page: 10, page: params[:page])
+      render 'index'
+    end
+    
+    def ic
+      available_reports = policy_scope(Rp::AvailableReport).where(service_code: 'IC').order(:name)
+      @available_reports = available_reports.paginate(per_page: 10, page: params[:page])
+      render 'index'
     end
     
     def generate
