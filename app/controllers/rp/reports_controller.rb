@@ -27,7 +27,14 @@ module Rp
       @report = Report.new(report_params)
     
       if @report.save
-        redirect_to reports_path, notice: 'Report was successfully created.'
+        
+        if @report.service_code == 'FT'
+          redirect_to ft_reports_path, notice: 'Report was successfully created.'
+        elsif @report.service_code == 'IC'
+          redirect_to ic_reports_path, notice: 'Report was successfully created.'
+        else
+          redirect_to reports_path, notice: 'Report was successfully created.'
+        end        
       else
         redirect_to available_reports_path, notice: @report.errors.full_messages        
       end
