@@ -12,20 +12,17 @@ module Rp
 
     def ft
       reports = policy_scope(Rp::Report).where(service_code: 'FT').order('id desc')
-      @reports = reports.paginate(per_page: 10, page: params[:page])
-      render 'index'
+      paginate_reports(reports)
     end
 
     def ic
       reports = policy_scope(Rp::Report).where(service_code: 'IC').order('id desc')
-      @reports = reports.paginate(per_page: 10, page: params[:page])
-      render 'index'
+      paginate_reports(reports)
     end
     
-    def system_generated_reports
-      reports = Rp::Report.where(created_by: nil).order('id desc')
-      @reports = reports.paginate(per_page: 10, page: params[:page])
-      render 'index'
+    def ft_system_generated_reports
+      reports = Rp::Report.where(service_code: 'FT', created_by: nil).order('id desc')
+      paginate_reports(reports)
     end
 
     # POST /reports
@@ -93,6 +90,12 @@ module Rp
     end
 
     private
+    
+      def paginate_reports(reports)
+        @reports = reports.paginate(per_page: 10, page: params[:page])
+        render 'index'
+      end
+
       # Use callbacks to share common setup or constraints between actions.
       def set_report
         @report = Report.find(params[:id])
