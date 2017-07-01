@@ -20,7 +20,7 @@ Rp::Engine.routes.draw do
     collection do
       get :ft
       get :ic
-      get :system_generated_reports
+      get :ft_system_generated_reports
     end
   end
   root :to => 'available_reports#index'
