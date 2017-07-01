@@ -21,6 +21,12 @@ module Rp
       @reports = reports.paginate(per_page: 10, page: params[:page])
       render 'index'
     end
+    
+    def system_generated_reports
+      reports = Rp::Report.where(created_by: nil).order('id desc')
+      @reports = reports.paginate(per_page: 10, page: params[:page])
+      render 'index'
+    end
 
     # POST /reports
     def create
