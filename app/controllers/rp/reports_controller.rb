@@ -24,6 +24,11 @@ module Rp
       reports = Rp::Report.where(service_code: 'FT', created_by: nil).order('id desc')
       paginate_reports(reports)
     end
+    
+    def su
+      reports = policy_scope(Rp::Report).where(service_code: 'SU').order('id desc')
+      paginate_reports(reports)
+    end
 
     # POST /reports
     def create
