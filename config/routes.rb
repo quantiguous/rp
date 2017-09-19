@@ -9,6 +9,7 @@ Rp::Engine.routes.draw do
     collection do
       get :ft
       get :ic
+      get :su
     end
   end
   resources :reports do
@@ -21,11 +22,13 @@ Rp::Engine.routes.draw do
       get :ft
       get :ic
       get :ft_system_generated_reports
+      get :su
     end
   end
   root :to => 'available_reports#index'
   
   get 'ft' => 'available_reports#ft'
   get 'ic' => 'available_reports#ic'
+  get 'su' => 'available_reports#su'
 
 end
