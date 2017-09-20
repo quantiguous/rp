@@ -39,6 +39,8 @@ module Rp
           redirect_to ft_reports_path, notice: 'Report was successfully created.'
         elsif @report.service_code == 'IC'
           redirect_to ic_reports_path, notice: 'Report was successfully created.'
+        elsif @report.service_code == 'SU'
+          redirect_to su_reports_path, notice: 'Report was successfully created.'
         else
           redirect_to reports_path, notice: 'Report was successfully created.'
         end
@@ -47,6 +49,8 @@ module Rp
           redirect_to ft_available_reports_path, notice: @report.errors.full_messages
         elsif @report.service_code == 'IC'
           redirect_to ic_available_reports_path, notice: @report.errors.full_messages
+        elsif @report.service_code == 'SU'
+          redirect_to su_available_reports_path, notice: @report.errors.full_messages
         else
           redirect_to available_reports_path, notice: @report.errors.full_messages
         end
