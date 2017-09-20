@@ -39,17 +39,13 @@ module Rp
           redirect_to ft_reports_path, notice: 'Report was successfully created.'
         elsif @report.service_code == 'IC'
           redirect_to ic_reports_path, notice: 'Report was successfully created.'
+        elsif @report.service_code == 'SU'
+          redirect_to su_reports_path, notice: 'Report was successfully created.'
         else
           redirect_to reports_path, notice: 'Report was successfully created.'
         end
-      else        
-        if @report.service_code == 'FT'
-          redirect_to ft_available_reports_path, notice: @report.errors.full_messages
-        elsif @report.service_code == 'IC'
-          redirect_to ic_available_reports_path, notice: @report.errors.full_messages
-        else
-          redirect_to available_reports_path, notice: @report.errors.full_messages
-        end
+      else
+        redirect_to :back, notice: @report.errors.full_messages
       end
     end
 
@@ -77,7 +73,7 @@ module Rp
           raise "Not Implemented"
         end
       rescue StandardError => e
-        redirect_to reports_path, notice: e.message
+        redirect_to :back, notice: e.message
       end
     end
 
@@ -91,7 +87,7 @@ module Rp
     
     def retry
       @report.create_pending_report
-      redirect_to reports_path
+      redirect_to :back
     end
 
     private
