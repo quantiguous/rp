@@ -35,9 +35,25 @@ module Rp
       @report = Report.new(report_params)
     
       if @report.save   
-        redirect_to :back, notice: 'Report was successfully created.'
-      else
-        redirect_to :back, notice: @report.errors.full_messages
+        if @report.service_code == 'FT'
+          redirect_to ft_reports_path, notice: 'Report was successfully created.'
+        elsif @report.service_code == 'IC'
+          redirect_to ic_reports_path, notice: 'Report was successfully created.'
+        elsif @report.service_code == 'SU'
+          redirect_to su_reports_path, notice: 'Report was successfully created.'
+        else
+          redirect_to reports_path, notice: 'Report was successfully created.'
+        end
+      else        
+        if @report.service_code == 'FT'
+          redirect_to ft_available_reports_path, notice: @report.errors.full_messages
+        elsif @report.service_code == 'IC'
+          redirect_to ic_available_reports_path, notice: @report.errors.full_messages
+        elsif @report.service_code == 'SU'
+          redirect_to su_available_reports_path, notice: @report.errors.full_messages
+        else
+          redirect_to available_reports_path, notice: @report.errors.full_messages
+        end
       end
     end
 
