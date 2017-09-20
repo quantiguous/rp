@@ -14,7 +14,8 @@ module Rp
 
     attr_accessor :protocol, :host, :run_at, :available_report_id
     
-    before_save :set_report_values, :parse_datetime
+    after_validation :set_report_values
+    before_save :parse_datetime
 
     after_create :create_pending_report
     after_create :set_report_url
