@@ -32,6 +32,6 @@ Rp::Engine.routes.draw do
   get 'ft' => 'available_reports#ft'
   get 'ic' => 'available_reports#ic'
   get 'su' => 'available_reports#su'
-  get 'su' => 'available_reports#imt'
+  get 'imt' => 'available_reports#imt'
 
 end
