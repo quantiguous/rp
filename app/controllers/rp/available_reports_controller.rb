@@ -27,6 +27,12 @@ module Rp
       render 'index'
     end
 
+    def imt
+      available_reports = policy_scope(Rp::AvailableReport).where(service_code: 'IMT').order(:name)
+      @available_reports = available_reports.paginate(per_page: 10, page: params[:page])
+      render 'index'
+    end
+
     def generate
       authorize @available_report
       respond_to do |format|
