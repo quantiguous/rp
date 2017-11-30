@@ -1,8 +1,8 @@
 module Rp
   class AvailableReport < ActiveRecord::Base
     enum param_types: [:number, :date, :text, :datetime]
-    MIME_TYPES = %w(text/csv text/plain)
-    FILE_EXT = %w(csv txt)
+    MIME_TYPES = %w(text/csv text/plain text/xml)
+    FILE_EXT = %w(csv txt xml)
     MONEY_FORMATS = %w(###,###,##0.00 ########0.00)
     HEADER_KINDS = [['Column Header', 'C'], ['Data Header', 'D'], ['None', 'N']]
     

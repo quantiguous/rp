@@ -5,12 +5,12 @@ module Rp
     before_action :set_setting, only: [:edit, :update, :destroy]
 
     def new
-      @setting = Setting.new
+      @setting = Rp::Setting.new
       authorize @setting
     end
 
     def create
-      @setting = Setting.new(setting_params)
+      @setting = Rp::Setting.new(setting_params)
 
       if @setting.save
         redirect_to settings_path, notice: 'Setting was successfully created.'
@@ -20,7 +20,7 @@ module Rp
     end
 
     def index
-      @settings = Setting.all
+      @settings = Rp::Setting.all
       @settings_count = @settings.count
     end
 
@@ -38,7 +38,7 @@ module Rp
 
     private
       def set_setting
-        @setting = Setting.find(params[:id])
+        @setting = Rp::Setting.find(params[:id])
       end
 
       def setting_params
