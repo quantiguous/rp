@@ -72,9 +72,9 @@ module Rp
 
       begin
         uri = URI(report.file_url)
-        if uri.scheme == Setting::FILE_SCHEMES[:scp]
+        if uri.scheme == Rp::Setting::FILE_SCHEMES[:scp]
           download_file(report)
-        elsif uri.scheme == Setting::FILE_SCHEMES[:file]
+        elsif uri.scheme == Rp::Setting::FILE_SCHEMES[:file]
           send_file uri.path, filename: report.file_name, type: report.mime_type
         else
           raise "Not Implemented"
