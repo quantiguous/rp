@@ -11,6 +11,7 @@ Rp::Engine.routes.draw do
       get :ic
       get :su
       get :imt
+      get :cc
     end
   end
   resources :reports do
@@ -25,6 +26,7 @@ Rp::Engine.routes.draw do
       get :ft_system_generated_reports
       get :su
       get :imt
+      get :cc
     end
   end
   root :to => 'available_reports#index'

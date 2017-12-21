@@ -34,6 +34,11 @@ module Rp
       reports = policy_scope(Rp::Report).where(service_code: 'IMT').order('id desc')
       paginate_reports(reports)
     end
+    
+    def cc
+      reports = policy_scope(Rp::Report).where(service_code: 'CC').order('id desc')
+      paginate_reports(reports)
+    end
 
     # POST /reports
     def create
@@ -48,6 +53,8 @@ module Rp
           redirect_to su_reports_path, notice: 'Report was successfully created.'
         elsif @report.service_code == 'IMT'
           redirect_to imt_reports_path, notice: 'Report was successfully created.'
+        elsif @report.service_code == 'CC'
+          redirect_to cc_reports_path, notice: 'Report was successfully created.'
         else
           redirect_to reports_path, notice: 'Report was successfully created.'
         end
