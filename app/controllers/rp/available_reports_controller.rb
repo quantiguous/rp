@@ -3,38 +3,45 @@ require_dependency "rp/application_controller"
 module Rp
   class AvailableReportsController < ApplicationController
     before_action :set_report, only: [:generate, :show, :destroy, :add_authorized_user]
+    include Rp::AvailableReportsHelper
 
     def index
-      available_reports = policy_scope(Rp::AvailableReport).where(service_code: 'RP').order(:name)
+      params[:service_code] = 'RP'
+      available_reports = find_available_reports(policy_scope(Rp::AvailableReport), params)
       @available_reports = available_reports.paginate(per_page: 10, page: params[:page])
     end
     
     def ft
-      available_reports = policy_scope(Rp::AvailableReport).where(service_code: 'FT').order(:name)
+      params[:service_code] = 'FT'
+      available_reports = find_available_reports(policy_scope(Rp::AvailableReport), params)
       @available_reports = available_reports.paginate(per_page: 10, page: params[:page])
       render 'index'
     end
     
     def ic
-      available_reports = policy_scope(Rp::AvailableReport).where(service_code: 'IC').order(:name)
+      params[:service_code] = 'IC'
+      available_reports = find_available_reports(policy_scope(Rp::AvailableReport), params)
       @available_reports = available_reports.paginate(per_page: 10, page: params[:page])
       render 'index'
     end
 
     def su
-      available_reports = policy_scope(Rp::AvailableReport).where(service_code: 'SU').order(:name)
+      params[:service_code] = 'SU'
+      available_reports = find_available_reports(policy_scope(Rp::AvailableReport), params)
       @available_reports = available_reports.paginate(per_page: 10, page: params[:page])
       render 'index'
     end
 
     def imt
-      available_reports = policy_scope(Rp::AvailableReport).where(service_code: 'IMT').order(:name)
+      params[:service_code] = 'IMT'
+      available_reports = find_available_reports(policy_scope(Rp::AvailableReport), params)
       @available_reports = available_reports.paginate(per_page: 10, page: params[:page])
       render 'index'
     end
     
     def cc
-      available_reports = policy_scope(Rp::AvailableReport).where(service_code: 'CC').order(:name)
+      params[:service_code] = 'CC'
+      available_reports = find_available_reports(policy_scope(Rp::AvailableReport), params)
       @available_reports = available_reports.paginate(per_page: 10, page: params[:page])
       render 'index'
     end
