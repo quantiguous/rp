@@ -12,6 +12,13 @@ Rp::Engine.routes.draw do
       get :su
       get :imt
       get :cc
+      
+      put :ft
+      put :ic
+      put :su
+      put :imt
+      put :cc
+      put :index
     end
   end
   resources :reports do
@@ -35,5 +42,6 @@ Rp::Engine.routes.draw do
   get 'ic' => 'available_reports#ic'
   get 'su' => 'available_reports#su'
   get 'imt' => 'available_reports#imt'
-
+  
+  put 'su' => 'available_reports#su'
 end

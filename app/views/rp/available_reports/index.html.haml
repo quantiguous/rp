@@ -1,5 +1,11 @@
 %h1 Listing Available Reports
 %br
+%h2.collapsible
+  Advanced Search
+  %span.caret
+.collapsible-content
+  = render :partial => 'advanced_search'
+%br
 = will_paginate
 %table.rp-table
   %thead{style: 'text-align:center; font-weight:bold;'}
