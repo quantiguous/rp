@@ -83,13 +83,5 @@ module Rp
         :param4_name, :param4_type, 
         :param5_name, :param5_type)
       end
-      
-      def search_params
-        if request.get?
-          params.permit(:page)
-        else
-          params(:available_report_searcher).permit(:page, :report_name)
-        end
-      end
   end
 end
