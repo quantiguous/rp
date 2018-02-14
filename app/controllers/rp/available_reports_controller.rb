@@ -45,6 +45,13 @@ module Rp
       @available_reports = available_reports.paginate(per_page: 10, page: params[:page])
       render 'index'
     end
+    
+    def gm
+      params[:service_code] = 'GEM'
+      available_reports = find_available_reports(policy_scope(Rp::AvailableReport), params)
+      @available_reports = available_reports.paginate(per_page: 10, page: params[:page])
+      render 'index'
+    end
 
     def generate
       authorize @available_report
